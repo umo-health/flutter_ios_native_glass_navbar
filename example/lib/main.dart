@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:native_liquid_tab_bar/native_liquid_tab_bar.dart';
 
@@ -54,6 +56,7 @@ class DemoPage extends StatefulWidget {
 
 class _DemoPageState extends State<DemoPage> {
   int _currentIndex = 0;
+  int _refreshKey = 0;
 
   bool _isActionButtonEnabled = true;
   String _actionButtonSymbol = 'plus';
@@ -61,10 +64,10 @@ class _DemoPageState extends State<DemoPage> {
 
   bool _isBackgroundItemsEnabled = false;
 
-  final List<NativeTabBarItem> _tabs = [
-    const NativeTabBarItem(label: 'Home', symbol: 'heart.fill'),
-    const NativeTabBarItem(label: 'Search', symbol: 'magnifyingglass'),
-    const NativeTabBarItem(label: 'Settings', symbol: 'gear'),
+  List<NativeTabBarItem> _tabs = [
+    NativeTabBarItem(label: 'Home', symbol: 'heart.fill'),
+    NativeTabBarItem(label: 'Search', symbol: 'magnifyingglass'),
+    NativeTabBarItem(label: 'Settings', symbol: 'gear'),
   ];
 
   @override
@@ -88,6 +91,7 @@ class _DemoPageState extends State<DemoPage> {
     }
     setState(() {
       _tabs.add(const NativeTabBarItem(label: 'New', symbol: 'star'));
+      _refreshKey++;
     });
   }
 
@@ -97,6 +101,7 @@ class _DemoPageState extends State<DemoPage> {
       if (_currentIndex >= _tabs.length) {
         _currentIndex = _tabs.length > 0 ? _tabs.length - 1 : 0;
       }
+      _refreshKey++;
     });
   }
 
@@ -139,6 +144,7 @@ class _DemoPageState extends State<DemoPage> {
                   label: labelController.text,
                   symbol: symbolController.text,
                 );
+                _refreshKey++;
               });
               Navigator.pop(context);
             },
@@ -154,8 +160,8 @@ class _DemoPageState extends State<DemoPage> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      extendBody: true,
-      appBar: AppBar(title: const Text('Native Liquid Tab Bar Example')),
+      extendBody: true, // NOTE - Enable to allow elements to be drawn behind the tab bar
+      appBar: AppBar(title: const Text('Native Liquid Tab Bar Demo')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -252,9 +258,60 @@ class _DemoPageState extends State<DemoPage> {
                 }),
               ),
             ),
+          Padding(padding: const EdgeInsets.only(top: 16.0), child: Divider()),
+          SwitchListTile(
+            contentPadding: EdgeInsets.all(0),
+            title: const Text(
+              'Background Items',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            ),
+            value: _isBackgroundItemsEnabled,
+            onChanged: (value) {
+              setState(() => _isBackgroundItemsEnabled = value);
+            },
+          ),
+          const SizedBox(height: 16),
+          if (_isBackgroundItemsEnabled)
+            Column(
+              children: List.generate(10, (rowIndex) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Row(
+                    children: List.generate(4, (colIndex) {
+                      final random = Random(rowIndex * 4 + colIndex);
+                      final flex = random.nextInt(3) + 1;
+                      final color = Colors.primaries[random.nextInt(Colors.primaries.length)];
+
+                      return Expanded(
+                        flex: flex,
+                        child: Container(
+                          height: 80,
+                          margin: EdgeInsets.only(right: colIndex == 3 ? 0 : 12.0),
+                          decoration: BoxDecoration(
+                            color: color,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            '${rowIndex * 4 + colIndex + 1}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                );
+              }),
+            ),
+          const SizedBox(height: 100),
         ],
       ),
       bottomNavigationBar: NativeLiquidTabBar(
+        key: ValueKey(_refreshKey),
         tabs: _tabs,
         actionButton: _isActionButtonEnabled
             ? TabBarActionButton(
