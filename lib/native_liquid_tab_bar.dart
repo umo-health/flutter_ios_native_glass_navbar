@@ -32,7 +32,9 @@ class NativeLiquidTabBar extends StatefulWidget {
     required this.tintColor,
   }) : assert(
          tabs.length <= (actionButton == null ? 5 : 4),
-         'NativeLiquidTabBar supports a maximum of 5 tabs (or 4 with an action button).',
+         actionButton == null
+             ? 'NativeLiquidTabBar supports a maximum of 5 tabs.'
+             : 'NativeLiquidTabBar with an action button supports a maximum of 4 tabs.',
        );
 
   @override

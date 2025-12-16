@@ -1,7 +1,7 @@
 name: native_liquid_tab_bar
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage:
+homepage: "https://github.com/TechSupportz/native_liquid_tab_bar"
 
 environment:
     sdk: ^3.9.2
