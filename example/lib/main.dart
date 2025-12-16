@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
     final lightTheme = ThemeData(
       brightness: Brightness.light,
       useMaterial3: true,
-      colorSchemeSeed: Colors.blue,
       snackBarTheme: const SnackBarThemeData(behavior: SnackBarBehavior.floating),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
@@ -31,8 +30,12 @@ class MyApp extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         filled: true,
       ),
-      dialogTheme: const DialogThemeData(
-        titleTextStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+      dialogTheme: DialogThemeData(
+        titleTextStyle: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 24,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
     );
 

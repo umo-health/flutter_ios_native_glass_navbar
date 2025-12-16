@@ -18,14 +18,7 @@ class _CustomColorTabsAppState extends State<CustomColorTabsApp> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData(
-        useMaterial3: true,
-        brightness: Theme.of(context).brightness,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.orange,
-          brightness: Theme.of(context).brightness,
-        ),
-      ),
+      data: ThemeData(useMaterial3: true, brightness: Theme.of(context).brightness),
       child: Scaffold(
         extendBody: true, // NOTE - Enable to allow elements to be drawn behind the tab bar
         appBar: AppBar(title: const Text('Custom Color Example')),
@@ -38,7 +31,10 @@ class _CustomColorTabsAppState extends State<CustomColorTabsApp> {
                 style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
-              const Text('This example uses a custom orange tint color'),
+              const Text(
+                'This example uses a custom orange tint color instead of the theme colour',
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),

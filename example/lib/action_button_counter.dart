@@ -66,13 +66,6 @@ class _ActionButtonCounterAppState extends State<ActionButtonCounterApp> {
               setState(() {
                 _counter++;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Counter incremented!'),
-                  duration: Duration(milliseconds: 500),
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
             },
           ),
         ),
