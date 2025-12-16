@@ -21,7 +21,7 @@ class NativeLiquidTabBar extends StatefulWidget {
   final TabBarActionButton? actionButton;
   final int currentIndex;
   final ValueChanged<int> onTap;
-  final Color tintColor;
+  final Color? tintColor;
 
   const NativeLiquidTabBar({
     super.key,
@@ -29,7 +29,7 @@ class NativeLiquidTabBar extends StatefulWidget {
     this.actionButton,
     required this.currentIndex,
     required this.onTap,
-    required this.tintColor,
+    this.tintColor,
   }) : assert(
          tabs.length <= (actionButton == null ? 5 : 4),
          actionButton == null
@@ -63,7 +63,9 @@ class _NativeLiquidTabBarState extends State<NativeLiquidTabBar> {
       'actionButtonSymbol': widget.actionButton?.symbol,
       'selectedIndex': widget.currentIndex,
       'isDark': Theme.of(context).brightness == Brightness.dark,
-      'tintColor': widget.tintColor.value,
+      'tintColor': widget.tintColor != null
+          ? widget.tintColor!.toARGB32()
+          : Theme.of(context).colorScheme.primary.toARGB32(),
     };
   }
 
