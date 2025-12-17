@@ -1,6 +1,10 @@
+export 'liquid_glass_helper.dart';
+
+import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:native_liquid_tab_bar/liquid_glass_helper.dart';
 
 class NativeTabBarItem {
   final String label;
@@ -22,6 +26,7 @@ class NativeLiquidTabBar extends StatefulWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
   final Color? tintColor;
+  final Widget? fallback;
 
   const NativeLiquidTabBar({
     super.key,
@@ -30,6 +35,7 @@ class NativeLiquidTabBar extends StatefulWidget {
     required this.currentIndex,
     required this.onTap,
     this.tintColor,
+    this.fallback,
   }) : assert(
          tabs.length <= (actionButton == null ? 5 : 4),
          actionButton == null
@@ -43,17 +49,20 @@ class NativeLiquidTabBar extends StatefulWidget {
 
 class _NativeLiquidTabBarState extends State<NativeLiquidTabBar> {
   MethodChannel? _channel;
-
-  @override
-  void didUpdateWidget(NativeLiquidTabBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _updateNativeView();
-  }
+  late Future<bool> _supportLiquidGlassFuture;
 
   void _updateNativeView() {
     if (_channel != null) {
       _channel!.invokeMethod('update', _createParams());
     }
+  }
+
+  Future<bool> checkLiquidGlassSupport() async {
+    if (defaultTargetPlatform != TargetPlatform.iOS) {
+      return false;
+    }
+
+    return await LiquidGlassHelper.isLiquidGlassSupported();
   }
 
   Map<String, dynamic> _createParams() {
@@ -70,36 +79,68 @@ class _NativeLiquidTabBarState extends State<NativeLiquidTabBar> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _supportLiquidGlassFuture = checkLiquidGlassSupport();
+  }
+
+  @override
+  void didUpdateWidget(NativeLiquidTabBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateNativeView();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // This is an iOS-only view
-    if (defaultTargetPlatform != TargetPlatform.iOS) {
-      return const SizedBox.shrink();
-    }
+    return FutureBuilder<bool>(
+      future: _supportLiquidGlassFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox.shrink();
+        }
 
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
-    // Standard tab bar height is 49. Add bottom padding for safe area.
-    final height = 49.0 + bottomPadding;
+        if (snapshot.data != true) {
+          if (widget.fallback != null) {
+            return widget.fallback!;
+          }
 
-    return SizedBox(
-      height: height,
-      child: UiKitView(
-        viewType: 'NativeTabBar',
-        creationParams: _createParams(),
-        creationParamsCodec: const StandardMessageCodec(),
-        onPlatformViewCreated: (id) {
-          _channel = MethodChannel('NativeTabBar_$id');
-          _channel!.setMethodCallHandler((call) async {
-            if (call.method == 'valueChanged') {
-              final index = call.arguments['index'] as int;
-              widget.onTap(index);
-            }
+          if (kDebugMode) {
+            developer.log(
+              'Liquid glass effect is not supported on this device. '
+              'Falling back to an empty widget. Provide a `fallback` widget to handle this case.',
+              name: 'NativeLiquidTabBar',
+              level: 900,
+            );
+          }
+          return const SizedBox.shrink();
+        }
 
-            if (call.method == 'actionButtonPressed') {
-              widget.actionButton?.onTap();
-            }
-          });
-        },
-      ),
+        final bottomPadding = MediaQuery.of(context).padding.bottom;
+        // Standard tab bar height is 49. Add bottom padding for safe area.
+        final height = 49.0 + bottomPadding;
+
+        return SizedBox(
+          height: height,
+          child: UiKitView(
+            viewType: 'NativeTabBar',
+            creationParams: _createParams(),
+            creationParamsCodec: const StandardMessageCodec(),
+            onPlatformViewCreated: (id) {
+              _channel = MethodChannel('NativeTabBar_$id');
+              _channel!.setMethodCallHandler((call) async {
+                if (call.method == 'valueChanged') {
+                  final index = call.arguments['index'] as int;
+                  widget.onTap(index);
+                }
+
+                if (call.method == 'actionButtonPressed') {
+                  widget.actionButton?.onTap();
+                }
+              });
+            },
+          ),
+        );
+      },
     );
   }
 }
