@@ -1,6 +1,6 @@
-# native_liquid_tab_bar_example
+# native_glass_navbar_example
 
-Demonstrates how to use the native_liquid_tab_bar plugin.
+Demonstrates how to use the native_glass_navbar plugin.
 
 ## Getting Started
 

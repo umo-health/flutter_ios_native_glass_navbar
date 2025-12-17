@@ -1,7 +1,7 @@
 name: native_glass_navbar
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage: "https://github.com/TechSupportz/native_liquid_tab_bar"
+homepage: "https://github.com/TechSupportz/native_glass_navbar"
 
 environment:
     sdk: ^3.9.2

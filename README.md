@@ -1,4 +1,4 @@
-# native_liquid_tab_bar
+# native_glass_nav_bar
 
 A new Flutter plugin project.
 
