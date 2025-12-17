@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:native_liquid_tab_bar/native_liquid_tab_bar.dart';
+import 'package:native_glass_navbar/native_glass_navbar.dart';
 
 void main() {
   runApp(const MaterialApp(home: ActionButtonCounterApp()));
@@ -48,7 +48,7 @@ class _ActionButtonCounterAppState extends State<ActionButtonCounterApp> {
             ],
           ),
         ),
-        bottomNavigationBar: NativeLiquidTabBar(
+        bottomNavigationBar: NativeGlassNavBar(
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
@@ -56,9 +56,9 @@ class _ActionButtonCounterAppState extends State<ActionButtonCounterApp> {
             });
           },
           tabs: const [
-            NativeTabBarItem(label: 'Home', symbol: 'house.fill'),
-            NativeTabBarItem(label: 'Search', symbol: 'magnifyingglass'),
-            NativeTabBarItem(label: 'Profile', symbol: 'person.fill'),
+            NativeGlassNavBarItem(label: 'Home', symbol: 'house.fill'),
+            NativeGlassNavBarItem(label: 'Search', symbol: 'magnifyingglass'),
+            NativeGlassNavBarItem(label: 'Profile', symbol: 'person.fill'),
           ],
           actionButton: TabBarActionButton(
             symbol: 'plus',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:native_liquid_tab_bar/native_liquid_tab_bar.dart';
+import 'package:native_glass_navbar/native_glass_navbar.dart';
 
 void main() {
   runApp(const MaterialApp(home: BasicTwoTabsApp()));
@@ -35,7 +35,7 @@ class _BasicTwoTabsAppState extends State<BasicTwoTabsApp> {
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        bottomNavigationBar: NativeLiquidTabBar(
+        bottomNavigationBar: NativeGlassNavBar(
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
@@ -43,8 +43,8 @@ class _BasicTwoTabsAppState extends State<BasicTwoTabsApp> {
             });
           },
           tabs: const [
-            NativeTabBarItem(label: 'Home', symbol: 'house.fill'),
-            NativeTabBarItem(label: 'Settings', symbol: 'gear'),
+            NativeGlassNavBarItem(label: 'Home', symbol: 'house.fill'),
+            NativeGlassNavBarItem(label: 'Settings', symbol: 'gear'),
           ],
         ),
       ),

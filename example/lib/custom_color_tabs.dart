@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:native_liquid_tab_bar/native_liquid_tab_bar.dart';
+import 'package:native_glass_navbar/native_glass_navbar.dart';
 
 void main() {
   runApp(const MaterialApp(home: CustomColorTabsApp()));
@@ -38,7 +38,7 @@ class _CustomColorTabsAppState extends State<CustomColorTabsApp> {
             ],
           ),
         ),
-        bottomNavigationBar: NativeLiquidTabBar(
+        bottomNavigationBar: NativeGlassNavBar(
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
@@ -47,10 +47,10 @@ class _CustomColorTabsAppState extends State<CustomColorTabsApp> {
           },
           tintColor: Colors.deepOrange,
           tabs: const [
-            NativeTabBarItem(label: 'Favorites', symbol: 'star.fill'),
-            NativeTabBarItem(label: 'Recents', symbol: 'clock.fill'),
-            NativeTabBarItem(label: 'Contacts', symbol: 'person.2.fill'),
-            NativeTabBarItem(label: 'Keypad', symbol: 'circle.grid.3x3.fill'),
+            NativeGlassNavBarItem(label: 'Favorites', symbol: 'star.fill'),
+            NativeGlassNavBarItem(label: 'Recents', symbol: 'clock.fill'),
+            NativeGlassNavBarItem(label: 'Contacts', symbol: 'person.2.fill'),
+            NativeGlassNavBarItem(label: 'Keypad', symbol: 'circle.grid.3x3.fill'),
           ],
         ),
       ),

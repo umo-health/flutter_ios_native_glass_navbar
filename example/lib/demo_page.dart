@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:native_liquid_tab_bar/native_liquid_tab_bar.dart';
+import 'package:native_glass_navbar/native_glass_navbar.dart';
 
 class DemoPage extends StatefulWidget {
   const DemoPage({super.key});
@@ -20,10 +20,10 @@ class _DemoPageState extends State<DemoPage> {
 
   bool _isBackgroundItemsEnabled = false;
 
-  List<NativeTabBarItem> _tabs = [
-    NativeTabBarItem(label: 'Home', symbol: 'heart.fill'),
-    NativeTabBarItem(label: 'Search', symbol: 'magnifyingglass'),
-    NativeTabBarItem(label: 'Settings', symbol: 'gear'),
+  List<NativeGlassNavBarItem> _tabs = [
+    NativeGlassNavBarItem(label: 'Home', symbol: 'heart.fill'),
+    NativeGlassNavBarItem(label: 'Search', symbol: 'magnifyingglass'),
+    NativeGlassNavBarItem(label: 'Settings', symbol: 'gear'),
   ];
 
   @override
@@ -46,7 +46,7 @@ class _DemoPageState extends State<DemoPage> {
       return;
     }
     setState(() {
-      _tabs.add(const NativeTabBarItem(label: 'New', symbol: 'star'));
+      _tabs.add(const NativeGlassNavBarItem(label: 'New', symbol: 'star'));
       _refreshKey++;
     });
   }
@@ -96,7 +96,7 @@ class _DemoPageState extends State<DemoPage> {
           TextButton(
             onPressed: () {
               setState(() {
-                _tabs[index] = NativeTabBarItem(
+                _tabs[index] = NativeGlassNavBarItem(
                   label: labelController.text,
                   symbol: symbolController.text,
                 );
@@ -266,7 +266,7 @@ class _DemoPageState extends State<DemoPage> {
           const SizedBox(height: 100),
         ],
       ),
-      bottomNavigationBar: NativeLiquidTabBar(
+      bottomNavigationBar: NativeGlassNavBar(
         key: ValueKey(_refreshKey),
         tabs: _tabs,
         actionButton: _isActionButtonEnabled

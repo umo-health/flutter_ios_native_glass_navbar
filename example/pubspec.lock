@@ -154,7 +154,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
-  native_liquid_tab_bar:
+  native_glass_navbar:
     dependency: "direct main"
     description:
       path: ".."

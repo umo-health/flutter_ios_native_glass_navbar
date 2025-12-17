@@ -4,13 +4,13 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:native_liquid_tab_bar/liquid_glass_helper.dart';
+import 'package:native_glass_navbar/liquid_glass_helper.dart';
 
-class NativeTabBarItem {
+class NativeGlassNavBarItem {
   final String label;
   final String symbol;
 
-  const NativeTabBarItem({required this.label, required this.symbol});
+  const NativeGlassNavBarItem({required this.label, required this.symbol});
 }
 
 class TabBarActionButton {
@@ -20,15 +20,15 @@ class TabBarActionButton {
   const TabBarActionButton({required this.symbol, required this.onTap});
 }
 
-class NativeLiquidTabBar extends StatefulWidget {
-  final List<NativeTabBarItem> tabs;
+class NativeGlassNavBar extends StatefulWidget {
+  final List<NativeGlassNavBarItem> tabs;
   final TabBarActionButton? actionButton;
   final int currentIndex;
   final ValueChanged<int> onTap;
   final Color? tintColor;
   final Widget? fallback;
 
-  const NativeLiquidTabBar({
+  const NativeGlassNavBar({
     super.key,
     required this.tabs,
     this.actionButton,
@@ -39,15 +39,15 @@ class NativeLiquidTabBar extends StatefulWidget {
   }) : assert(
          tabs.length <= (actionButton == null ? 5 : 4),
          actionButton == null
-             ? 'NativeLiquidTabBar supports a maximum of 5 tabs.'
-             : 'NativeLiquidTabBar with an action button supports a maximum of 4 tabs.',
+             ? 'NativeGlassNavBar supports a maximum of 5 tabs.'
+             : 'NativeGlassNavBar with an action button supports a maximum of 4 tabs.',
        );
 
   @override
-  State<NativeLiquidTabBar> createState() => _NativeLiquidTabBarState();
+  State<NativeGlassNavBar> createState() => _NativeGlassNavBarState();
 }
 
-class _NativeLiquidTabBarState extends State<NativeLiquidTabBar> {
+class _NativeGlassNavBarState extends State<NativeGlassNavBar> {
   MethodChannel? _channel;
   late Future<bool> _supportLiquidGlassFuture;
 
@@ -85,7 +85,7 @@ class _NativeLiquidTabBarState extends State<NativeLiquidTabBar> {
   }
 
   @override
-  void didUpdateWidget(NativeLiquidTabBar oldWidget) {
+  void didUpdateWidget(NativeGlassNavBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     _updateNativeView();
   }
@@ -108,7 +108,7 @@ class _NativeLiquidTabBarState extends State<NativeLiquidTabBar> {
             developer.log(
               'Liquid glass effect is not supported on this device. '
               'Falling back to an empty widget. Provide a `fallback` widget to handle this case.',
-              name: 'NativeLiquidTabBar',
+              name: 'NativeGlassNavBar',
               level: 900,
             );
           }
