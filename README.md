@@ -4,6 +4,8 @@ A Flutter plugin that brings the native iOS Liquid Glass style navigation bar to
 
 This package uses [platform views and method channels](https://docs.flutter.dev/platform-integration/ios/platform-views) to render the actual native iOS `UITabBar`. This means no more of that uncanny valley effect that you often get with custom Flutter implementations.
 
+Oh yeah, it also doesn't have any 3rd party dependencies!
+
 ## **Demos** <br />
 ![output](https://github.com/user-attachments/assets/d7691c1b-5eef-451d-b18f-4d118ca3e8f2)
 ![output-items-bg](https://github.com/user-attachments/assets/5bbc0358-0e85-4604-89db-96eb68806053)
