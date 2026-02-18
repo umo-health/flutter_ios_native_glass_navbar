@@ -173,7 +173,7 @@ class LiquidGlassTabBarController: UITabBarController, UITabBarControllerDelegat
 
 		// Find the action button (Tag 99)
 		if let actionVC = vcs.first(where: { $0.tabBarItem.tag == 99 }) {
-			actionVC.tabBarItem.image = UIImage(systemName: config.actionButtonSymbol)
+			actionVC.tabBarItem.image = resolveSymbol(config.actionButtonSymbol)
 		}
 	}
 
@@ -191,7 +191,7 @@ class LiquidGlassTabBarController: UITabBarController, UITabBarControllerDelegat
 
 			dummyVC.tabBarItem = UITabBarItem(
 				title: label,
-				image: UIImage(systemName: symbolName),
+				image: resolveSymbol(symbolName),
 				tag: i
 			)
 			controllers.append(dummyVC)
@@ -203,7 +203,7 @@ class LiquidGlassTabBarController: UITabBarController, UITabBarControllerDelegat
 			actionVC.view.backgroundColor = .clear
 
 			let item = UITabBarItem(tabBarSystemItem: .search, tag: 99)
-			item.image = UIImage(systemName: config.actionButtonSymbol)
+			item.image = resolveSymbol(config.actionButtonSymbol)
 
 			actionVC.tabBarItem = item
 			controllers.append(actionVC)
@@ -228,6 +228,10 @@ class LiquidGlassTabBarController: UITabBarController, UITabBarControllerDelegat
 			}
 		}
 	}
+    
+    private func resolveSymbol(_ name: String) -> UIImage? {
+        return UIImage(systemName: name) ?? UIImage(named: name)
+    }
 
 	// MARK: - Delegate
 	func tabBarController(
